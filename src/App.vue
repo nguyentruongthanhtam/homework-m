@@ -4,7 +4,7 @@ import { RouterLink, RouterView } from 'vue-router'
 
 <template>
   <header>
-    <img alt="Vue logo" class="logo" src="@/assets/logo.png" width="125" />
+    <img alt="Vue logo" class="logo" src="@/assets/logo.png" width="65" />
   </header>
 
   <RouterView />
@@ -12,17 +12,16 @@ import { RouterLink, RouterView } from 'vue-router'
 
 <style scoped>
 header {
-  line-height: 1.5;
-  max-height: 100vh;
+  height: 50px;
+  display: flex;
+  align-items: center;
 }
 
 .logo {
   display: block;
-  margin: 0 auto 2rem;
+  margin: 0 auto;
 }
 
-
 @media (min-width: 1024px) {
-
 }
 </style>
