@@ -1,18 +1,15 @@
 <script setup lang="ts">
 import MergeBoard from '../components/MergeBoard.vue'
 import RightPanel from '@/components/RightPanel.vue'
-
-import jsonData from '../assets/assigment.json'
-console.log(jsonData)
 </script>
 
 <template>
   <main>
-    <section>
-      <MergeBoard :payload="jsonData" />
+    <section class="board">
+      <MergeBoard />
     </section>
-    <aside>
-      <RightPanel :payload="jsonData" />
+    <aside class="panel">
+      <RightPanel />
     </aside>
   </main>
 </template>
@@ -20,10 +17,10 @@ console.log(jsonData)
 <style>
 main {
   height: calc(100% - 50px);
-  section {
+  .board {
     height: 80%;
   }
-  aside {
+  .panel {
     height: 20%;
   }
 }
