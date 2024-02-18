@@ -21,7 +21,7 @@ function onRemove() {
     class="cell"
     :style="cssProps"
     :class="{ active: isActive }"
-    @click="$emit('onActive')"
+    @click.stop="$emit('onActive')"
     @mouseenter="onHover()"
     @mouseleave="onHover()"
   >
