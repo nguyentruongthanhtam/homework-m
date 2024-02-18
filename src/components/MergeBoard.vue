@@ -3,15 +3,14 @@ import { ref } from 'vue'
 import BoardCell from './BoardCell.vue'
 import { store } from '../store'
 
-const props = defineProps(['payload'])
-const payload = props.payload
-const boardSize = payload.width * payload.height
-const items = payload.items
+const data = store.data
+const boardSize = data.width * data.height
+const items = data.items
 // const chosenCell = ref(-1)
 const cellProps = {
   css: {
-    width: payload.width,
-    height: payload.height
+    width: data.width,
+    height: data.height
   }
 }
 
@@ -21,7 +20,7 @@ function setChosenCell(cellIndex: number) {
 </script>
 
 <template>
-  <section class="wrapper">
+  <section class="wrapper" @click="store.chosenCell = -1">
     <div class="board">
       <BoardCell
         v-for="(n, index) in boardSize"
@@ -50,7 +49,6 @@ function setChosenCell(cellIndex: number) {
   .board {
     width: 100%;
     height: 100%;
-
     border: 1px solid #333;
     display: flex;
     flex-wrap: wrap;
