@@ -1,8 +1,10 @@
 <script lang="ts" setup>
 import { ref, toRef } from 'vue'
-const props = defineProps(['data', 'isActive'])
+const props = defineProps(['data', 'isActive', 'isNotVisible', 'isInsideBubble'])
 const css = props.data.css
 const isActive = toRef(props, 'isActive')
+const isNotVisible = toRef(props, 'isNotVisible')
+const isInsideBubble = toRef(props, 'isInsideBubble')
 const isHover = ref(false)
 const cssProps = {
   '--board-width': css.width,
@@ -20,12 +22,13 @@ function onRemove() {
   <div
     class="cell"
     :style="cssProps"
-    :class="{ active: isActive }"
+    :class="{ active: isActive, visible: isNotVisible }"
     @click.stop="$emit('onActive')"
     @mouseenter="onHover()"
     @mouseleave="onHover()"
   >
     <slot name="image"></slot>
+    <div class="bubble" v-show="isInsideBubble"></div>
     <button class="deleteBtn" v-if="isHover && isActive" @click="onRemove()">X</button>
   </div>
 </template>
@@ -40,6 +43,20 @@ function onRemove() {
   border: 3px solid rgba(55, 55, 55, 0.2);
   &.active {
     border: 3px solid red;
+  }
+  &.visible {
+    opacity: 0.5;
+    background-color: #444;
+    color: white;
+  }
+  .bubble {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: 3px solid cyan;
+    border-radius: 50%;
   }
   .deleteBtn {
     position: absolute;

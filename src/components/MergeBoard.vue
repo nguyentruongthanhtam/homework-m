@@ -6,7 +6,6 @@ import { store } from '../store'
 const data = store.data
 const boardSize = data.width * data.height
 const items = data.items
-// const chosenCell = ref(-1)
 const cellProps = {
   css: {
     width: data.width,
@@ -27,6 +26,8 @@ function setChosenCell(cellIndex: number) {
         :key="index"
         :data="cellProps"
         :isActive="index === store.chosenCell"
+        :isNotVisible="store.data.items[index]?.visibility === 'hidden'"
+        :isInsideBubble="store.data.items[index]?.isInsideBubble"
         @on-active="setChosenCell(index)"
       >
         <template #image>
@@ -41,7 +42,7 @@ function setChosenCell(cellIndex: number) {
 .wrapper {
   width: 100%;
   height: 100%;
-  padding: 2em;
+
   display: flex;
   align-items: center;
   justify-content: center;
@@ -56,9 +57,7 @@ function setChosenCell(cellIndex: number) {
 }
 @media (min-width: 1024px) {
   .wrapper {
-    /* flex-direction: row; */
     .board {
-      padding: 1em;
       width: 1000px;
       height: 1000px;
     }
