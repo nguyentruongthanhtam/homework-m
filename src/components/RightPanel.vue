@@ -91,8 +91,6 @@ const createdAtDate = computed(() => {
           false-value="hidden"
           @change="handleChange($event, 'visibility')"
         />
-      </div>
-      <div>
         <label for="isInsideBubble">Is Inside Bubble</label>
         <input
           type="checkbox"
@@ -102,33 +100,55 @@ const createdAtDate = computed(() => {
         />
       </div>
     </section>
+    <div v-if="store.data.items[store.chosenCell]">
+      <button class="remove-btn">Remove</button>
+    </div>
   </div>
 </template>
 
 <style scoped>
 .panel-wrapper {
-  border: 1px solid blue;
+  border: 3px solid burlywood;
+  border-radius: 0.5em;
   height: 100%;
+  display: flex;
+  justify-content: space-around;
+  gap: 1em;
+  div {
+    display: flex;
+    .remove-btn {
+      align-self: end;
+      padding: 1em;
+    }
+  }
   section {
     height: 100%;
     display: flex;
-
     flex-wrap: wrap;
     div {
       display: flex;
       flex-direction: column;
+      min-width: 100px;
     }
   }
 }
 @media (min-width: 1024px) {
   .panel-wrapper {
-    border: 1px solid blue;
     height: 100%;
+    max-width: 1000px;
+    margin: 0 auto;
+    div {
+      .remove-btn {
+        align-self: center;
+        padding: 1em 2em;
+      }
+    }
     section {
-      align-items: center;
+      flex-direction: column;
+      align-items: start;
       justify-content: center;
-      max-width: 800px;
-      margin: 0 auto;
+      /* max-width: 800px; */
+      /* margin: 0 auto; */
       gap: 1em;
     }
   }
