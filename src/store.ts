@@ -25,7 +25,6 @@ export const store = reactive({
   data: jsonData,
   updateValue(type: ItemType, newValue: string|number|boolean) {
     if(this.data.items[this.chosenCell]) {
-      
       (this.data.items[this.chosenCell] as unknown as Record<string, string | number | boolean>)[type] = newValue
     }
   },

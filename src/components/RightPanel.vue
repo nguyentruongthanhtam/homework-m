@@ -3,7 +3,20 @@ import { computed } from 'vue'
 import { store, type ItemType } from '../store'
 
 function handleChange(event: Event, type: ItemType) {
-  const newValue: string = (event.target as HTMLInputElement).value
+  let newValue: string | number | boolean
+  switch (type) {
+    case 'visibility':
+      newValue = (event.target as HTMLInputElement).checked ? 'visible' : 'hidden'
+      break
+
+    case 'isInsideBubble':
+      newValue = (event.target as HTMLInputElement).checked
+      break
+
+    default:
+      newValue = (event.target as HTMLInputElement).value
+      break
+  }
   store.updateValue(type, newValue)
 }
 function removeItem() {
@@ -90,8 +103,6 @@ const createdAtDate = computed(() => {
           type="checkbox"
           name="visibility"
           :checked="store.data.items[store.chosenCell]?.visibility === 'visible'"
-          true-value="visible"
-          false-value="hidden"
           @change="handleChange($event, 'visibility')"
         />
         <label for="isInsideBubble">Is Inside Bubble</label>
