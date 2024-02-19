@@ -5,7 +5,7 @@ export interface JsonData {
   boardId: string
   width: number
   height: number
-  items: (Item | null)[]
+  items: (Item | null | undefined)[]
 }
 
 export interface Item {
@@ -14,19 +14,22 @@ export interface Item {
   chainId: string
   pausedUntil: string|null
   createdAt: string
-  visibility: 'hidden' | 'visible'
+  visibility: string
   itemLevel: number
   isInsideBubble: boolean
 }
 
 export type ItemType = 'itemId' |'itemType' | 'chainId' | 'pausedUntil' | 'createdAt' | 'visibility' | 'itemLevel' | 'isInsideBubble'
-const data : JsonData = jsonData;
 export const store = reactive({
-  chosenCell: ref(-1),
-  data,
-  updateValue(type: ItemType, index:number, newValue: string|number|boolean) {
-    if(data.items[index]) {
-      (data.items[index] as unknown as Record<string, string | number | boolean | 'hidden' | 'visible'>)[type] = newValue
+  chosenCell: -1,
+  data: jsonData,
+  updateValue(type: ItemType, newValue: string|number|boolean) {
+    if(this.data.items[this.chosenCell]) {
+      
+      (this.data.items[this.chosenCell] as unknown as Record<string, string | number | boolean>)[type] = newValue
     }
   },
+  removeItem() {
+    this.data.items[this.chosenCell] = null
+  }
 })

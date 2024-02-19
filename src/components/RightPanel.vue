@@ -1,10 +1,13 @@
 <script lang="ts" setup>
-import { ref, toRef, computed } from 'vue'
-import { store, type Item, type ItemType } from '../store'
+import { computed } from 'vue'
+import { store, type ItemType } from '../store'
 
 function handleChange(event: Event, type: ItemType) {
   const newValue: string = (event.target as HTMLInputElement).value
-  store.updateValue(type, store.chosenCell, newValue)
+  store.updateValue(type, newValue)
+}
+function removeItem() {
+  store.removeItem()
 }
 
 const pausedUntilDate = computed(() => {
@@ -101,7 +104,7 @@ const createdAtDate = computed(() => {
       </div>
     </section>
     <div v-if="store.data.items[store.chosenCell]">
-      <button class="remove-btn">Remove</button>
+      <button class="remove-btn" @click="removeItem()">Remove</button>
     </div>
   </div>
 </template>

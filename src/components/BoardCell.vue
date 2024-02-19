@@ -29,7 +29,7 @@ function onRemove() {
   >
     <slot name="image"></slot>
     <div class="bubble" v-show="isInsideBubble"></div>
-    <button class="deleteBtn" v-if="isHover && isActive" @click="onRemove()">X</button>
+    <!-- <button class="deleteBtn" v-if="isHover && isActive" @click="onRemove()">X</button> -->
   </div>
 </template>
 
