@@ -23,6 +23,7 @@ export type ItemType = 'itemId' |'itemType' | 'chainId' | 'pausedUntil' | 'creat
 export const store = reactive({
   chosenCell: -1,
   data: jsonData,
+  isModalOn: false,
   updateValue(type: ItemType, newValue: string|number|boolean) {
     if(this.data.items[this.chosenCell]) {
       (this.data.items[this.chosenCell] as unknown as Record<string, string | number | boolean>)[type] = newValue
@@ -30,5 +31,12 @@ export const store = reactive({
   },
   removeItem() {
     this.data.items[this.chosenCell] = null
+  },
+  isCellEmpty() {
+    return this.data.items[this.chosenCell] === null
+  },
+  toggleModal() {
+    this.isModalOn = !this.isModalOn
   }
+
 })

@@ -128,6 +128,7 @@ const createdAtDate = computed(() => {
   display: flex;
   justify-content: space-around;
   gap: 1em;
+  box-shadow: 4px 4px 10px 1px #888;
   div {
     display: flex;
     .remove-btn {
