@@ -30,8 +30,8 @@ export const store = reactive({
       (this.data.items[this.chosenCell] as unknown as Record<string, string | number | boolean>)[type] = newValue
     }
   },
-  removeItem() {
-    this.data.items[this.chosenCell] = null
+  removeItem(index: number) {
+    this.data.items[index] = null
   },
   isCellEmpty() {
     return this.data.items[this.chosenCell] === null
@@ -39,8 +39,8 @@ export const store = reactive({
   toggleModal() {
     this.isModalOn = !this.isModalOn
   },
-  addItemToBoard(newItem: Item) {
-    return this.data.items[this.chosenCell] = newItem
+  addItemToBoard(newItem: Item, index: number) {
+    return this.data.items[index] = newItem
   }
 
 })

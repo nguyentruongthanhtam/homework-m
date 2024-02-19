@@ -10,13 +10,6 @@ const cssProps = {
   '--board-width': css.width,
   '--board-height': css.height
 }
-
-function onHover() {
-  isHover.value = !isHover.value
-}
-function onRemove() {
-  console.log('remove')
-}
 </script>
 <template>
   <div
@@ -24,8 +17,6 @@ function onRemove() {
     :style="cssProps"
     :class="{ active: isActive, visible: isNotVisible }"
     @click.stop="$emit('onActive')"
-    @mouseenter="onHover()"
-    @mouseleave="onHover()"
   >
     <slot name="image"></slot>
     <div class="bubble" v-show="isInsideBubble"></div>

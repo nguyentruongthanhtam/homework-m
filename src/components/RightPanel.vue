@@ -19,8 +19,8 @@ function handleChange(event: Event, type: ItemType) {
   }
   store.updateValue(type, newValue)
 }
-function removeItem() {
-  store.removeItem()
+function removeItem(index: number) {
+  store.removeItem(index)
 }
 
 const pausedUntilDate = computed(() => {
@@ -115,7 +115,7 @@ const createdAtDate = computed(() => {
       </div>
     </section>
     <div v-if="store.data.items[store.chosenCell]">
-      <button class="remove-btn" @click="removeItem()">Remove</button>
+      <button class="remove-btn" @click="removeItem(store.chosenCell)">Remove</button>
     </div>
   </div>
 </template>

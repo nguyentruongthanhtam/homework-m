@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { store } from '../store'
+import { store, type Item } from '../store'
 import BoardCell from './BoardCell.vue'
 import AddModal from './AddModal.vue'
 const data = store.data
@@ -13,7 +13,10 @@ const cellProps = {
     height: data.height
   }
 }
-
+interface DragPayload {
+  item: Item
+  originIndex: number
+}
 function setChosenCell(cellIndex: number) {
   store.chosenCell = cellIndex
   isModalOn.value = false
@@ -24,6 +27,31 @@ function setChosenCell(cellIndex: number) {
 
 function showAddModal() {
   store.toggleModal()
+}
+
+function handleDragStart(event: DragEvent, index: number) {
+  console.log('drag ', event)
+  const payload: DragPayload = {
+    item: store.data.items[index]!,
+    originIndex: index
+  }
+  event.dataTransfer?.setData('application/json', JSON.stringify(payload))
+}
+function handleDrop(event: DragEvent, targetIndex: number) {
+  console.log('target ', store.data.items[targetIndex])
+
+  // When target cell is empty
+  const payload: DragPayload = JSON.parse(event.dataTransfer?.getData('application/json') as string)
+  if (!store.data.items[targetIndex]) {
+    store.addItemToBoard(payload.item, targetIndex)
+    store.removeItem(payload.originIndex)
+  }
+  // When target cell is not empty
+  else {
+    const temp: Item = store.data.items[targetIndex]!
+    store.addItemToBoard(payload.item, targetIndex)
+    store.addItemToBoard(temp, payload.originIndex)
+  }
 }
 </script>
 
@@ -37,7 +65,11 @@ function showAddModal() {
         :isActive="index === store.chosenCell"
         :isNotVisible="store.data.items[index]?.visibility === 'hidden'"
         :isInsideBubble="store.data.items[index]?.isInsideBubble"
+        :draggable="store.data.items[index] ? true : false"
         @on-active="setChosenCell(index)"
+        @dragstart="handleDragStart($event, index)"
+        @drop="handleDrop($event, index)"
+        @dragover.prevent
       >
         <template #image>
           <div>{{ items[index]?.itemType }}</div>

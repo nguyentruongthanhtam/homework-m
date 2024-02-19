@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-import { ref } from 'vue'
 import { store, type Item } from '../store'
 
 let newItemList: Item[] = []
@@ -28,7 +27,7 @@ possibleItemTypes.forEach((itemType) => {
 })
 
 function addNewItem(item: Item) {
-  store.addItemToBoard(item)
+  store.addItemToBoard(item, store.chosenCell)
   store.toggleModal()
 }
 </script>
