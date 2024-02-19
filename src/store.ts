@@ -9,20 +9,21 @@ export interface JsonData {
 }
 
 export interface Item {
-  itemId: number
+  itemId?: number | null
   itemType: string
   chainId: string
-  pausedUntil: string|null
-  createdAt: string
-  visibility: string
+  pausedUntil?: string|null
+  createdAt?: string | null
+  visibility: 'visible' | 'hidden'
   itemLevel: number
   isInsideBubble: boolean
 }
 
 export type ItemType = 'itemId' |'itemType' | 'chainId' | 'pausedUntil' | 'createdAt' | 'visibility' | 'itemLevel' | 'isInsideBubble'
+
 export const store = reactive({
   chosenCell: -1,
-  data: jsonData,
+  data: jsonData as JsonData,
   isModalOn: false,
   updateValue(type: ItemType, newValue: string|number|boolean) {
     if(this.data.items[this.chosenCell]) {
@@ -37,6 +38,9 @@ export const store = reactive({
   },
   toggleModal() {
     this.isModalOn = !this.isModalOn
+  },
+  addItemToBoard(newItem: Item) {
+    return this.data.items[this.chosenCell] = newItem
   }
 
 })
