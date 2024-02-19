@@ -44,7 +44,9 @@ function showAddModal() {
         </template>
       </BoardCell>
     </div>
-    <AddModal></AddModal>
+    <Teleport to="#app">
+      <AddModal></AddModal>
+    </Teleport>
   </section>
 </template>
 

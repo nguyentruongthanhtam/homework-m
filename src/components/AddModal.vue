@@ -3,14 +3,14 @@ import { store } from '../store'
 </script>
 
 <template>
-  <Teleport to="#app">
+  <Transition name="modal">
     <div class="modal-wrapper" v-if="store.isModalOn">
       <div class="overlay" v-if="store.isModalOn" @click.stop="store.toggleModal()"></div>
       <div class="add-modal">
         <div v-for="n in 10" class="new-item-cell">item {{ n }}</div>
       </div>
     </div>
-  </Teleport>
+  </Transition>
 </template>
 
 <style>
@@ -22,6 +22,7 @@ import { store } from '../store'
   height: 100%;
   display: flex;
   justify-content: center;
+  transition: opacity 0.3s ease;
 }
 .add-modal {
   align-self: center;
@@ -36,6 +37,7 @@ import { store } from '../store'
   background-color: #f1f1f1;
   z-index: 2;
   gap: 1em;
+  transition: all 0.3s ease;
   .new-item-cell {
     width: 50px;
     height: 50px;
@@ -51,7 +53,19 @@ import { store } from '../store'
   background-color: #3333338c;
   z-index: 1;
 }
+.modal-enter-from {
+  opacity: 0;
+}
 
+.modal-leave-to {
+  opacity: 0;
+}
+
+.modal-enter-from .add-modal,
+.modal-leave-to .add-modal {
+  -webkit-transform: scale(1.1);
+  transform: scale(1.1);
+}
 @media (min-width: 1024px) {
   .add-modal {
     width: 50%;
