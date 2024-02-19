@@ -4,7 +4,6 @@ import { store, type Item } from '../store'
 import BoardCell from './BoardCell.vue'
 import AddModal from './AddModal.vue'
 const data = store.data
-const boardSize = data.width * data.height
 const items = data.items
 const isModalOn = ref(false)
 const cellProps = {
@@ -30,7 +29,6 @@ function showAddModal() {
 }
 
 function handleDragStart(event: DragEvent, index: number) {
-  console.log('drag ', event)
   const payload: DragPayload = {
     item: store.data.items[index]!,
     originIndex: index
@@ -38,8 +36,6 @@ function handleDragStart(event: DragEvent, index: number) {
   event.dataTransfer?.setData('application/json', JSON.stringify(payload))
 }
 function handleDrop(event: DragEvent, targetIndex: number) {
-  console.log('target ', store.data.items[targetIndex])
-
   // When target cell is empty
   const payload: DragPayload = JSON.parse(event.dataTransfer?.getData('application/json') as string)
   if (!store.data.items[targetIndex]) {
@@ -59,20 +55,20 @@ function handleDrop(event: DragEvent, targetIndex: number) {
   <section class="wrapper" @click="store.chosenCell = -1">
     <div class="board">
       <BoardCell
-        v-for="(n, index) in boardSize"
+        v-for="(item, index) in items"
         :key="index"
         :data="cellProps"
         :isActive="index === store.chosenCell"
-        :isNotVisible="store.data.items[index]?.visibility === 'hidden'"
-        :isInsideBubble="store.data.items[index]?.isInsideBubble"
-        :draggable="store.data.items[index] ? true : false"
+        :isNotVisible="item?.visibility === 'hidden'"
+        :isInsideBubble="item?.isInsideBubble"
+        :draggable="item ? true : false"
         @on-active="setChosenCell(index)"
         @dragstart="handleDragStart($event, index)"
         @drop="handleDrop($event, index)"
         @dragover.prevent
       >
         <template #image>
-          <div>{{ items[index]?.itemType }}</div>
+          <div>{{ item?.itemType }}</div>
         </template>
       </BoardCell>
     </div>

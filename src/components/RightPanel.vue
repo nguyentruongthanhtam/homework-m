@@ -162,8 +162,6 @@ const createdAtDate = computed(() => {
       flex-direction: column;
       align-items: start;
       justify-content: center;
-      /* max-width: 800px; */
-      /* margin: 0 auto; */
       gap: 1em;
     }
   }
