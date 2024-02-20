@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import { store, type Item } from '../store'
+import { getAssetPath } from '../assetService'
 
 let newItemList: Item[] = []
 const possibleItemTypes = [
@@ -39,9 +40,12 @@ function addNewItem(item: Item) {
       <div class="add-modal">
         <h2>Add item</h2>
         <div class="new-item-container">
-          <div v-for="item in newItemList" class="new-item-cell" @click="addNewItem(item)">
-            {{ item?.itemType }}
-          </div>
+          <div
+            v-for="item in newItemList"
+            class="new-item-cell"
+            @click="addNewItem(item)"
+            :style="{ 'background-image': getAssetPath(item.itemType) }"
+          ></div>
         </div>
       </div>
     </div>
@@ -83,6 +87,9 @@ function addNewItem(item: Item) {
     .new-item-cell {
       width: 50px;
       height: 50px;
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center center;
       border: solid 1px red;
     }
   }

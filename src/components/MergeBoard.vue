@@ -29,10 +29,6 @@ function showAddModal() {
   store.toggleModal()
 }
 
-function getImgSrc(itemType: string): string {
-  return 'url(' + getAssetPath(itemType) + ')'
-}
-
 function handleDragStart(event: DragEvent, index: number) {
   const payload: DragPayload = {
     item: store.data.items[index]!,
@@ -67,14 +63,17 @@ function handleDrop(event: DragEvent, targetIndex: number) {
         :isActive="index === store.chosenCell"
         :isNotVisible="item?.visibility === 'hidden'"
         :isInsideBubble="item?.isInsideBubble"
-        :draggable="item ? true : false"
+        :draggable="item && item.visibility === 'visible' ? true : false"
         @on-active="setChosenCell(index)"
         @dragstart="handleDragStart($event, index)"
         @drop="handleDrop($event, index)"
         @dragover.prevent
       >
         <template #image v-if="item">
-          <div class="game-asset" :style="{ 'background-image': getImgSrc(item.itemType) }"></div>
+          <div
+            class="game-asset"
+            :style="{ 'background-image': getAssetPath(item.itemType) }"
+          ></div>
         </template>
       </BoardCell>
     </div>
