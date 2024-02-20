@@ -46,8 +46,11 @@ const cssProps = {
     left: 0;
     width: 100%;
     height: 100%;
-    border: 3px solid cyan;
-    border-radius: 50%;
+    background: radial-gradient(100% 115% at 25% 25%, #fff, transparent 33%),
+      radial-gradient(15% 15% at 75% 75%, #80dfff, transparent),
+      radial-gradient(100% 100% at 50% 25%, transparent, #66d9ff 98%);
+    border: 1px solid #b3ecff;
+    border-radius: 100%;
   }
   .deleteBtn {
     position: absolute;
