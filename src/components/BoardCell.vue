@@ -33,7 +33,7 @@ const cssProps = {
   user-select: none;
   border: 3px solid rgba(55, 55, 55, 0.2);
   &.active {
-    border: 3px solid red;
+    border: 3px dotted red;
   }
   &.visible {
     opacity: 0.5;

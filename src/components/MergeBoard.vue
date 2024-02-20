@@ -3,6 +3,7 @@ import { ref } from 'vue'
 import { store, type Item } from '../store'
 import BoardCell from './BoardCell.vue'
 import AddModal from './AddModal.vue'
+import { getAssetPath } from '../assetService'
 const data = store.data
 const items = data.items
 const isModalOn = ref(false)
@@ -28,6 +29,10 @@ function showAddModal() {
   store.toggleModal()
 }
 
+function getImgSrc(itemType: string): string {
+  return 'url(' + getAssetPath(itemType) + ')'
+}
+
 function handleDragStart(event: DragEvent, index: number) {
   const payload: DragPayload = {
     item: store.data.items[index]!,
@@ -48,6 +53,7 @@ function handleDrop(event: DragEvent, targetIndex: number) {
     store.addItemToBoard(payload.item, targetIndex)
     store.addItemToBoard(temp, payload.originIndex)
   }
+  store.chosenCell = targetIndex
 }
 </script>
 
@@ -67,8 +73,8 @@ function handleDrop(event: DragEvent, targetIndex: number) {
         @drop="handleDrop($event, index)"
         @dragover.prevent
       >
-        <template #image>
-          <div>{{ item?.itemType }}</div>
+        <template #image v-if="item">
+          <div class="game-asset" :style="{ 'background-image': getImgSrc(item.itemType) }"></div>
         </template>
       </BoardCell>
     </div>
@@ -94,6 +100,13 @@ function handleDrop(event: DragEvent, targetIndex: number) {
     border: 3px solid #333;
     border-radius: 0.5em;
     box-shadow: 4px 4px 10px 1px #888;
+    .game-asset {
+      width: 100%;
+      height: 100%;
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center center;
+    }
   }
 }
 @media (min-width: 1024px) {

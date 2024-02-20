@@ -42,5 +42,4 @@ export const store = reactive({
   addItemToBoard(newItem: Item, index: number) {
     return this.data.items[index] = newItem
   }
-
 })
