@@ -115,6 +115,7 @@ const createdAtDate = computed(() => {
       </div>
     </section>
     <div v-if="store.data.items[store.chosenCell]">
+      Item Level {{ store.data.items[store.chosenCell]?.itemLevel }}
       <button class="remove-btn" @click="removeItem(store.chosenCell)">Remove</button>
     </div>
   </div>
