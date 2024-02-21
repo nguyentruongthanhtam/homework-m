@@ -36,10 +36,18 @@ const cssProps = {
   word-break: break-all;
   user-select: none;
   border: 1px solid #eee;
+  padding: 0.2em;
   .border {
     border: 3px dashed transparent;
+    transform: scale(0.8);
   }
-
+  :slotted(.game-asset) {
+    width: 100%;
+    height: 100%;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center center;
+  }
   &.active {
     .border {
       border: 3px dashed #333;
@@ -48,7 +56,11 @@ const cssProps = {
       position: absolute;
       left: 0;
       top: 0;
-      transition: border 0.2s;
+      transition: all 0.2s;
+      transform: scale(1);
+    }
+    :slotted(.game-asset) {
+      animation: spring 0.3s ease-in-out;
     }
   }
   &.visible {
