@@ -29,14 +29,14 @@ possibleItemTypes.forEach((itemType) => {
 
 function addNewItem(item: Item) {
   store.addItemToBoard(item, store.chosenCell)
-  store.toggleModal()
+  store.toggleAddModal()
 }
 </script>
 
 <template>
   <Transition name="modal">
-    <div class="modal-wrapper" v-if="store.isModalOn">
-      <div class="overlay" v-if="store.isModalOn" @click.stop="store.toggleModal()"></div>
+    <div class="modal-wrapper" v-if="store.isAddModalOn">
+      <div class="overlay" v-if="store.isAddModalOn" @click.stop="store.toggleAddModal()"></div>
       <div class="add-modal">
         <h2>Add item</h2>
         <div class="new-item-container">
@@ -71,6 +71,7 @@ function addNewItem(item: Item) {
   display: flex;
   flex-direction: column;
   border: 3px solid green;
+  border-radius: 0.5em;
   background-color: #f1f1f1;
   z-index: 2;
   transition: all 0.3s ease;
@@ -85,12 +86,16 @@ function addNewItem(item: Item) {
     gap: 1em;
     width: 100%;
     .new-item-cell {
-      width: 50px;
-      height: 50px;
+      width: 100px;
+      height: 100px;
       background-size: contain;
       background-repeat: no-repeat;
       background-position: center center;
-      border: solid 1px red;
+      border: solid 3px #ddd;
+      &:hover {
+        border: solid 3px #333;
+        transition: border 0.3s;
+      }
     }
   }
 }

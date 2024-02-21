@@ -6,7 +6,6 @@ import AddModal from './AddModal.vue'
 import { getAssetPath } from '../assetService'
 const data = store.data
 const items = data.items
-const isModalOn = ref(false)
 const cellProps = {
   css: {
     width: data.width,
@@ -18,38 +17,43 @@ interface DragPayload {
   originIndex: number
 }
 function setChosenCell(cellIndex: number) {
-  store.chosenCell = cellIndex
-  isModalOn.value = false
-  if (store.isCellEmpty()) {
-    showAddModal()
+  // if cell is hidden > cannot select
+  if (items[cellIndex]?.visibility === 'visible' || !items[cellIndex]) {
+    store.chosenCell = cellIndex
+    if (store.isCellEmpty()) {
+      store.toggleAddModal()
+    }
   }
-}
-
-function showAddModal() {
-  store.toggleModal()
 }
 
 function handleDragStart(event: DragEvent, index: number) {
   const payload: DragPayload = {
-    item: store.data.items[index]!,
+    item: items[index]!,
     originIndex: index
   }
   event.dataTransfer?.setData('application/json', JSON.stringify(payload))
+  setChosenCell(index)
 }
 function handleDrop(event: DragEvent, targetIndex: number) {
-  // When target cell is empty
-  const payload: DragPayload = JSON.parse(event.dataTransfer?.getData('application/json') as string)
-  if (!store.data.items[targetIndex]) {
-    store.addItemToBoard(payload.item, targetIndex)
-    store.removeItem(payload.originIndex)
+  const targetItem = items[targetIndex]
+  // When target cell is hidden > cancel the drop
+  if (targetItem?.visibility === 'visible' || !targetItem) {
+    // When target cell is empty
+    const payload: DragPayload = JSON.parse(
+      event.dataTransfer?.getData('application/json') as string
+    )
+    if (!items[targetIndex]) {
+      store.addItemToBoard(payload.item, targetIndex)
+      store.removeItem(payload.originIndex)
+    }
+    // When target cell is not empty
+    else {
+      const temp: Item = items[targetIndex]!
+      store.addItemToBoard(payload.item, targetIndex)
+      store.addItemToBoard(temp, payload.originIndex)
+    }
+    store.chosenCell = targetIndex
   }
-  // When target cell is not empty
-  else {
-    const temp: Item = store.data.items[targetIndex]!
-    store.addItemToBoard(payload.item, targetIndex)
-    store.addItemToBoard(temp, payload.originIndex)
-  }
-  store.chosenCell = targetIndex
 }
 </script>
 

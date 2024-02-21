@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import MergeBoard from '../components/MergeBoard.vue'
-import RightPanel from '@/components/RightPanel.vue'
+import Panel from '@/components/Panel.vue'
 </script>
 
 <template>
   <main>
     <aside class="panel-container">
-      <RightPanel />
+      <Panel />
     </aside>
     <section class="board-container">
       <MergeBoard />
