@@ -100,16 +100,10 @@ function handleDrop(event: DragEvent, targetIndex: number) {
     flex-wrap: wrap;
     width: 100%;
     height: 100%;
-    border: 3px solid #333;
+    border: 2px solid burlywood;
+    padding: 1em;
     border-radius: 0.5em;
     box-shadow: 4px 4px 10px 1px #888;
-    .game-asset {
-      width: 100%;
-      height: 100%;
-      background-size: contain;
-      background-repeat: no-repeat;
-      background-position: center center;
-    }
   }
 }
 @media (min-width: 1024px) {
