@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { computed } from 'vue'
 import { store, type Item } from '../store'
 import BoardCell from './BoardCell.vue'
 import AddModal from './AddModal.vue'
@@ -16,14 +16,13 @@ interface DragPayload {
   item: Item
   originIndex: number
 }
+
 function setChosenCell(cellIndex: number) {
-  // if cell is hidden > cannot select
-  if (items[cellIndex]?.visibility === 'visible' || !items[cellIndex]) {
-    store.chosenCell = cellIndex
-    if (store.isCellEmpty()) {
-      store.toggleAddModal()
-    }
+  store.chosenCell = cellIndex
+  if (store.isCellEmpty()) {
+    store.toggleAddModal()
   }
+  // }
 }
 
 function handleDragStart(event: DragEvent, index: number) {
@@ -34,26 +33,22 @@ function handleDragStart(event: DragEvent, index: number) {
   event.dataTransfer?.setData('application/json', JSON.stringify(payload))
   setChosenCell(index)
 }
+
 function handleDrop(event: DragEvent, targetIndex: number) {
   const targetItem = items[targetIndex]
-  // When target cell is hidden > cancel the drop
-  if (targetItem?.visibility === 'visible' || !targetItem) {
-    // When target cell is empty
-    const payload: DragPayload = JSON.parse(
-      event.dataTransfer?.getData('application/json') as string
-    )
-    if (!items[targetIndex]) {
-      store.addItemToBoard(payload.item, targetIndex)
-      store.removeItem(payload.originIndex)
-    }
-    // When target cell is not empty
-    else {
-      const temp: Item = items[targetIndex]!
-      store.addItemToBoard(payload.item, targetIndex)
-      store.addItemToBoard(temp, payload.originIndex)
-    }
-    store.chosenCell = targetIndex
+  // When target cell is empty
+  const payload: DragPayload = JSON.parse(event.dataTransfer?.getData('application/json') as string)
+  if (!items[targetIndex]) {
+    store.addItemToBoard(payload.item, targetIndex)
+    store.removeItem(payload.originIndex)
   }
+  // When target cell is not empty
+  else {
+    const temp: Item = items[targetIndex]!
+    store.addItemToBoard(payload.item, targetIndex)
+    store.addItemToBoard(temp, payload.originIndex)
+  }
+  store.chosenCell = targetIndex
 }
 </script>
 
@@ -67,7 +62,7 @@ function handleDrop(event: DragEvent, targetIndex: number) {
         :isActive="index === store.chosenCell"
         :isNotVisible="item?.visibility === 'hidden'"
         :isInsideBubble="item?.isInsideBubble"
-        :draggable="item && item.visibility === 'visible' ? true : false"
+        :draggable="true"
         @on-active="setChosenCell(index)"
         @dragstart="handleDragStart($event, index)"
         @drop="handleDrop($event, index)"

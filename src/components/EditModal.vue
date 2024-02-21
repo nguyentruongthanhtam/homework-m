@@ -46,7 +46,7 @@ const createdAtDate = computed(() => {
           v-if="store.chosenCell > -1 && store.data.items[store.chosenCell]"
           class="form-container"
         >
-          <div>
+          <div class="input-wrapper">
             <label for="itemId">Item Id</label>
             <input
               type="number"
@@ -56,17 +56,17 @@ const createdAtDate = computed(() => {
               @change="handleChange($event, 'itemId')"
             />
           </div>
-          <div>
+          <div class="input-wrapper">
             <label for="itemLevel">Item Level</label>
             <input
               type="number"
-              min="0"
+              min="1"
               name="itemLevel"
               :value="store.data.items[store.chosenCell]?.itemLevel"
               @change="handleChange($event, 'itemLevel')"
             />
           </div>
-          <div>
+          <div class="input-wrapper">
             <label for="itemType">Item Type</label>
             <input
               type="text"
@@ -75,7 +75,7 @@ const createdAtDate = computed(() => {
               @change="handleChange($event, 'itemType')"
             />
           </div>
-          <div>
+          <div class="input-wrapper">
             <label for="chainId">Chain Id</label>
             <input
               type="text"
@@ -84,7 +84,7 @@ const createdAtDate = computed(() => {
               @change="handleChange($event, 'chainId')"
             />
           </div>
-          <div>
+          <div class="input-wrapper">
             <label for="pausedUntil">Paused Until</label>
             <input
               type="datetime-local"
@@ -93,7 +93,7 @@ const createdAtDate = computed(() => {
               @change="handleChange($event, 'pausedUntil')"
             />
           </div>
-          <div>
+          <div class="input-wrapper">
             <label for="createdAt">Created At</label>
             <input
               type="datetime-local"
@@ -142,7 +142,7 @@ const createdAtDate = computed(() => {
 .edit-modal {
   align-self: center;
   place-self: center;
-  width: 80%;
+  width: 60%;
   display: flex;
   flex-direction: column;
   border: 3px solid green;
@@ -158,21 +158,23 @@ const createdAtDate = computed(() => {
     justify-content: flex-start;
     flex-direction: column;
     flex-wrap: wrap;
-    gap: 1em;
-    height: 50%;
-    width: 100%;
-    /* .new-item-cell {
-      width: 100px;
-      height: 100px;
-      background-size: contain;
-      background-repeat: no-repeat;
-      background-position: center center;
-      border: solid 3px #ddd;
-      &:hover {
-        border: solid 3px #333;
-        transition: border 0.3s;
+    gap: 0.5em;
+    .input-wrapper {
+      display: flex;
+      align-items: start;
+      flex-direction: column;
+      input {
+        height: 2em;
+        min-width: 200px;
+        border-radius: 5px;
+        padding: 1.5em 0.5em;
       }
-    } */
+    }
+    .checkbox-wrapper {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
   }
 }
 .overlay {
@@ -199,12 +201,8 @@ const createdAtDate = computed(() => {
 }
 @media (min-width: 1024px) {
   .edit-modal {
-    width: 40%;
-    height: 50%;
-    .form-container {
-      /* width: 40% !important; */
-      height: 50% !important;
-    }
+    width: 30%;
+    height: 60%;
   }
 }
 </style>
