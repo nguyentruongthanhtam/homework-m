@@ -42,9 +42,12 @@ function addNewItem(item: Item) {
         <div class="new-item-container">
           <div
             v-for="item in newItemList"
-            class="new-item-cell"
+            class="new-item-cell has-tooltip"
             @click="addNewItem(item)"
-            :style="{ 'background-image': getAssetPath(item.itemType) }"
+            :style="{
+              'background-image': getAssetPath(item.itemType)
+            }"
+            :data-tooltip="item.itemType"
           ></div>
         </div>
       </div>
@@ -92,6 +95,7 @@ function addNewItem(item: Item) {
       background-repeat: no-repeat;
       background-position: center center;
       border: solid 3px #ddd;
+      position: relative;
       &:hover {
         border: solid 3px #333;
         transition: border 0.3s;

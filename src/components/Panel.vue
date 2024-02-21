@@ -82,27 +82,22 @@ function removeItem(index: number) {
           font-size: 16px;
           text-align: center;
           cursor: pointer;
-
-          /* Red Glossy Effect */
-          /* background: linear-gradient(to bottom, #ffefef, #fda5a5, #ff6868, #ff3434, #ff1919); */
           box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.2);
           transition: all 0.2s ease-in-out;
 
-          /* Red Light Shadow */
           text-shadow: 0 1px 1px rgba(255, 255, 255, 0.5);
           box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 
-          /* Hover State (Optional) */
           &:hover {
             background: linear-gradient(to bottom, #f5f5f5, #f3f3f3, #f1f1f1, #efefef);
             box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.3);
-            transform: translateY(1px); /* Optional subtle hover animation */
+            transform: translateY(1px);
           }
           &.red {
-            background: radial-gradient(circle at 50% 50%, #f7f7f7 0%, #d00000 100%);
+            background: radial-gradient(circle at 50% 50%, #f29090 0%, #db0909 100%);
           }
           &.blue {
-            background: radial-gradient(circle at 50% 50%, #c6f6d5 0%, #28a745 100%);
+            background: radial-gradient(circle at 50% 50%, #96eba7 0%, #09a22d 100%);
           }
         }
       }

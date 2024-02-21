@@ -10,13 +10,23 @@ const cssProps = {
   '--board-width': css.width,
   '--board-height': css.height
 }
+function tooltipText() {
+  if (isNotVisible.value) {
+    return 'Item is hidden'
+  } else if (isInsideBubble.value) {
+    return 'Item is not yet available'
+  }
+
+  return undefined
+}
 </script>
 <template>
   <div
-    class="cell"
+    class="cell has-tooltip"
     :style="cssProps"
-    :class="{ active: isActive, visible: isNotVisible }"
+    :class="{ active: isActive, hidden: isNotVisible }"
     @click.stop="$emit('onActive')"
+    :data-tooltip="tooltipText()"
   >
     <slot name="image"></slot>
     <div class="bubble-wrapper" v-show="isInsideBubble">
@@ -63,10 +73,12 @@ const cssProps = {
       animation: spring 0.3s ease-in-out;
     }
   }
-  &.visible {
-    opacity: 0.5;
-    background-color: #444;
+  &.hidden {
+    background-color: #666;
     color: white;
+    :slotted(.game-asset) {
+      opacity: 0;
+    }
   }
   .bubble-wrapper {
     position: absolute;
@@ -86,19 +98,6 @@ const cssProps = {
       border: 1px solid #b3ecff;
       border-radius: 100%;
     }
-  }
-  .deleteBtn {
-    position: absolute;
-    top: -10px;
-    right: -10px;
-    padding: 2px;
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    border: none;
-    background-color: red;
-    color: white;
-    z-index: 1;
   }
 }
 @media (min-width: 1024px) {
