@@ -1,9 +1,8 @@
 <script setup lang="ts">
-import { computed } from 'vue'
 import { store, type Item } from '../store'
 import BoardCell from './BoardCell.vue'
-import AddModal from './AddModal.vue'
-import { getAssetPath } from '../assetService'
+import AddModal from './modal/AddModal.vue'
+import { getAssetPath } from '@/assetService'
 const data = store.data
 const items = data.items
 const cellProps = {
@@ -22,7 +21,6 @@ function setChosenCell(cellIndex: number) {
   if (store.isCellEmpty()) {
     store.toggleAddModal()
   }
-  // }
 }
 
 function handleDragStart(event: DragEvent, index: number) {

@@ -1,42 +1,55 @@
 <script lang="ts" setup>
-import { store } from '../store'
-import EditModal from './EditModal.vue'
+import { store } from '@/store'
+import EditModal from './modal/EditModal.vue'
+import ChainModal from './modal/ChainModal.vue'
 import removeIcon from '@/assets/trash.svg'
 import editIcon from '@/assets/pen.svg'
+import infoIcon from '@/assets/info.svg'
+const items = store.data.items
 function removeItem(index: number) {
   store.removeItem(index)
 }
 </script>
 <template>
   <div class="panel-wrapper">
-    <div v-if="store.data.items[store.chosenCell]" class="panel-container">
+    <div v-if="items[store.chosenCell]" class="panel-container">
       <div class="text-wrapper">
-        <h2>{{ store.data.items[store.chosenCell]?.itemType }} is at</h2>
-        <h1>Level {{ store.data.items[store.chosenCell]?.itemLevel }}</h1>
+        <h2>{{ items[store.chosenCell]?.itemType }} is at</h2>
+        <h1>Level {{ items[store.chosenCell]?.itemLevel }}</h1>
       </div>
       <div class="button-wrapper">
         <div>
           <h2>Remove</h2>
-          <button class="button game-button red" @click="removeItem(store.chosenCell)">
+          <button class="button styled-button red" @click="removeItem(store.chosenCell)">
             <img :src="removeIcon" alt="remove button" class="icon" width="32" height="32" />
           </button>
         </div>
         <div>
           <h2>Edit</h2>
-          <button class="button game-button blue" @click="store.toggleEditModal()">
+          <button class="button styled-button blue" @click="store.toggleEditModal()">
             <img :src="editIcon" alt="remove button" class="icon" width="32" height="32" />
           </button>
         </div>
       </div>
+      <button class="button-info small-styled-button" @click="store.toggleModal()">
+        <img :src="infoIcon" alt="info button" class="icon" width="24" height="24" />
+      </button>
+    </div>
+    <div v-else>
+      <h2>Click on an item to see information about it here</h2>
     </div>
     <Teleport to="#app">
-      <EditModal></EditModal>
+      <EditModal v-if="store.isEditModalOn"></EditModal>
+    </Teleport>
+    <Teleport to="#app">
+      <ChainModal v-if="store.isModalOn"></ChainModal>
     </Teleport>
   </div>
 </template>
 
 <style scoped>
 .panel-wrapper {
+  position: relative;
   border: 3px solid burlywood;
   border-radius: 0.5em;
   height: 100%;
@@ -72,36 +85,16 @@ function removeItem(index: number) {
       }
       .button {
         align-self: end;
-        padding: 0.5em;
-        min-width: 100px;
-        &.game-button {
-          /* Base Properties */
-          display: inline-block;
-          border: 2px solid #ddd;
-          border-radius: 1em;
-          font-size: 16px;
-          text-align: center;
-          cursor: pointer;
-          box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.2);
-          transition: all 0.2s ease-in-out;
-
-          text-shadow: 0 1px 1px rgba(255, 255, 255, 0.5);
-          box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-
-          &:hover {
-            background: linear-gradient(to bottom, #f5f5f5, #f3f3f3, #f1f1f1, #efefef);
-            box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.3);
-            transform: translateY(1px);
-          }
-          &.red {
-            background: radial-gradient(circle at 50% 50%, #f29090 0%, #db0909 100%);
-          }
-          &.blue {
-            background: radial-gradient(circle at 50% 50%, #96eba7 0%, #09a22d 100%);
-          }
-        }
       }
     }
+    .button-info {
+      position: absolute;
+      right: -1em;
+      top: -1em;
+    }
+  }
+  h2 {
+    text-align: center;
   }
 }
 @media (min-width: 1024px) {

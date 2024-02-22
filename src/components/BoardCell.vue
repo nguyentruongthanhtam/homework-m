@@ -5,7 +5,7 @@ const css = props.data.css
 const isActive = toRef(props, 'isActive')
 const isNotVisible = toRef(props, 'isNotVisible')
 const isInsideBubble = toRef(props, 'isInsideBubble')
-const isHover = ref(false)
+
 const cssProps = {
   '--board-width': css.width,
   '--board-height': css.height
@@ -51,13 +51,6 @@ function tooltipText() {
     border: 3px dashed transparent;
     transform: scale(0.8);
   }
-  :slotted(.game-asset) {
-    width: 100%;
-    height: 100%;
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center center;
-  }
   &.active {
     .border {
       border: 3px dashed #333;
@@ -74,10 +67,10 @@ function tooltipText() {
     }
   }
   &.hidden {
-    background-color: #666;
+    background-color: #aaa;
     color: white;
     :slotted(.game-asset) {
-      opacity: 0;
+      opacity: 0.4;
     }
   }
   .bubble-wrapper {

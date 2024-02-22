@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { computed } from 'vue'
-import { store, type Item, type ItemType } from '../store'
+import { store, type Item, type ItemType } from '@/store'
 
 function handleChange(event: Event, type: ItemType) {
   let newValue: string | number | boolean
@@ -33,6 +33,8 @@ const createdAtDate = computed(() => {
   const formattedDate = dateObject.toISOString().slice(0, -1)
   return formattedDate
 })
+
+function submitForm() {}
 </script>
 
 <template>
@@ -42,7 +44,7 @@ const createdAtDate = computed(() => {
       <div class="edit-modal">
         <h2>Edit item</h2>
 
-        <section
+        <form
           v-if="store.chosenCell > -1 && store.data.items[store.chosenCell]"
           class="form-container"
         >
@@ -64,6 +66,7 @@ const createdAtDate = computed(() => {
               name="itemLevel"
               :value="store.data.items[store.chosenCell]?.itemLevel"
               @change="handleChange($event, 'itemLevel')"
+              required
             />
           </div>
           <div class="input-wrapper">
@@ -73,6 +76,7 @@ const createdAtDate = computed(() => {
               name="itemType"
               :value="store.data.items[store.chosenCell]?.itemType"
               @change="handleChange($event, 'itemType')"
+              required
             />
           </div>
           <div class="input-wrapper">
@@ -82,6 +86,7 @@ const createdAtDate = computed(() => {
               name="chainId"
               :value="store.data.items[store.chosenCell]?.chainId"
               @change="handleChange($event, 'chainId')"
+              required
             />
           </div>
           <div class="input-wrapper">
@@ -121,7 +126,10 @@ const createdAtDate = computed(() => {
             />
             <label for="isInsideBubble">Is Inside Bubble</label>
           </div>
-        </section>
+          <button type="submit" class="styled-button green" @click.prevent="submitForm()">
+            Save
+          </button>
+        </form>
       </div>
     </div>
   </Transition>
@@ -142,7 +150,7 @@ const createdAtDate = computed(() => {
 .edit-modal {
   align-self: center;
   place-self: center;
-  width: 60%;
+  width: 80%;
   display: flex;
   flex-direction: column;
   border: 3px solid green;
@@ -165,7 +173,7 @@ const createdAtDate = computed(() => {
       flex-direction: column;
       input {
         height: 2em;
-        min-width: 200px;
+        min-width: 250px;
         border-radius: 5px;
         padding: 1.5em 0.5em;
       }
@@ -202,7 +210,7 @@ const createdAtDate = computed(() => {
 @media (min-width: 1024px) {
   .edit-modal {
     width: 30%;
-    height: 60%;
+    height: 65%;
   }
 }
 </style>

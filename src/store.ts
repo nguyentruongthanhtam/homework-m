@@ -1,5 +1,5 @@
 // store.js
-import {ref, reactive } from 'vue'
+import {reactive } from 'vue'
 import jsonData  from './assets/assigment.json'
 export interface JsonData {
   boardId: string
@@ -23,7 +23,9 @@ export type ItemType = 'itemId' |'itemType' | 'chainId' | 'pausedUntil' | 'creat
 
 export const store = reactive({
   chosenCell: -1,
+  chosenLevel: 0,
   data: jsonData as JsonData,
+  isModalOn: false,
   isAddModalOn: false,
   isEditModalOn: false,
   updateValue(type: ItemType, newValue: string|number|boolean) {
@@ -33,6 +35,7 @@ export const store = reactive({
   },
   removeItem(index: number) {
     this.data.items[index] = null
+    this.chosenCell = -1
   },
   isCellEmpty() {
     return this.data.items[this.chosenCell] === null
@@ -43,7 +46,47 @@ export const store = reactive({
   toggleEditModal() {
     this.isEditModalOn = !this.isEditModalOn
   },
+  toggleModal() {
+    this.isModalOn = !this.isModalOn
+  },
   addItemToBoard(newItem: Item, index: number) {
     return this.data.items[index] = newItem
+  },
+  getMaxLevelOfByItemChain(chainId: string|undefined) {
+    if(chainId) {
+      const arrayOfTheSameChainId = this.data.items.filter(item=>item?.chainId === chainId)
+      console.table(arrayOfTheSameChainId);
+      return arrayOfTheSameChainId
+    }
+    return null;
+  },
+  getMaxLevelOfByItemChain(chainId: string | undefined) {
+    if (chainId) {
+      const arrayOfTheSameChainId: Item[] = store.data.items.filter(
+        (item) => item?.chainId === chainId
+      ) as Item[]
+  
+      let biggestKey1Value: number = -1
+      for (const obj of arrayOfTheSameChainId) {
+        if (obj?.itemLevel && obj?.itemLevel > biggestKey1Value) {
+          biggestKey1Value = obj?.itemLevel
+        }
+      }
+      const result = []
+      for (let index = 0; index < biggestKey1Value; index++) {
+        result[index] = null
+        // since index of array start from 0 and level start from 1
+        // that's why item.itemLevel - 1
+        const level = arrayOfTheSameChainId.find((item) => item.itemLevel - 1 === index)
+        if (level) {
+          result[index] = level
+        }
+      }
+      store.chosenLevel = store.data.items[store.chosenCell]?.itemLevel!
+      console.log(store.chosenLevel)
+      return result
+    }
+    return null
   }
+  
 })

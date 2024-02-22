@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import MergeBoard from '../components/MergeBoard.vue'
+import MergeBoard from '@/components/MergeBoard.vue'
 import Panel from '@/components/Panel.vue'
 </script>
 
