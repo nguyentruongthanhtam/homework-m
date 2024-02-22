@@ -59,6 +59,6 @@ export function getAssetPath(itemType : string): string {
         ["Workbench_05", "assets/png/Workbench/workbench 1.png"],
         ["Workbench_07", "assets/png/Workbench/workbench 2.png"],
       ])
-      const computedURL = new URL(assetMap.get(itemType)!, import.meta.url).href
+      const computedURL = new URL(assetMap.get(itemType)! || "assets/not-found.png", import.meta.url).href
     return 'url(' + computedURL + ')'
 }
