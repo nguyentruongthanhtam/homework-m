@@ -1,40 +1,51 @@
 <script lang="ts" setup>
-import { computed } from 'vue'
-import { store, type Item, type ItemType } from '@/store'
+import { computed, reactive } from 'vue'
+import { store, type Item } from '@/store'
+import VueDatePicker from '@vuepic/vue-datepicker'
+import '@vuepic/vue-datepicker/dist/main.css'
+import useValidate from '@vuelidate/core'
+import { required } from '@vuelidate/validators'
 
-function handleChange(event: Event, type: ItemType) {
-  let newValue: string | number | boolean
-  switch (type) {
-    case 'visibility':
-      newValue = (event.target as HTMLInputElement).checked ? 'visible' : 'hidden'
-      break
+const state = reactive({
+  itemType: store.data.items[store.chosenCell]?.itemType,
+  itemLevel: store.data.items[store.chosenCell]?.itemLevel,
+  itemId: store.data.items[store.chosenCell]?.itemId,
+  chainId: store.data.items[store.chosenCell]?.chainId,
+  createdAt: store.data.items[store.chosenCell]?.createdAt,
+  pausedUntil: store.data.items[store.chosenCell]?.pausedUntil,
+  visibility: store.data.items[store.chosenCell]?.visibility,
+  isInsideBubble: store.data.items[store.chosenCell]?.isInsideBubble
+})
+const rules = computed(() => ({
+  itemType: { required },
+  itemLevel: { required },
+  itemId: {},
+  chainId: { required },
+  createdAt: {},
+  pausedUntil: {},
+  visibility: {},
+  isInsideBubble: {}
+}))
+const v$ = useValidate(rules, state)
 
-    case 'isInsideBubble':
-      newValue = (event.target as HTMLInputElement).checked
-      break
-
-    default:
-      newValue = (event.target as HTMLInputElement).value
-      break
+function submitForm() {
+  v$.value.$validate()
+  if (!v$.value.$invalid) {
+    const formValue = v$.value
+    console.log(v$.value)
+    const item: Item = {
+      chainId: state.chainId!,
+      itemType: state.itemType!,
+      itemLevel: state.itemLevel!,
+      itemId: state.itemId!,
+      createdAt: state.createdAt!,
+      pausedUntil: state.pausedUntil!,
+      isInsideBubble: state.isInsideBubble!,
+      visibility: state.visibility!
+    }
+    store.setValue(item)
   }
-  store.updateValue(type, newValue)
 }
-const pausedUntilDate = computed(() => {
-  const pausedUntil = store.data.items[store.chosenCell]?.pausedUntil || ''
-  const dateObject = new Date(pausedUntil)
-  if (!pausedUntil) return ''
-  const formattedDate = dateObject.toISOString().slice(0, -1)
-  return formattedDate
-})
-const createdAtDate = computed(() => {
-  const createdAt = store.data.items[store.chosenCell]?.createdAt || ''
-  const dateObject = new Date(createdAt)
-  if (!createdAt) return ''
-  const formattedDate = dateObject.toISOString().slice(0, -1)
-  return formattedDate
-})
-
-function submitForm() {}
 </script>
 
 <template>
@@ -43,87 +54,49 @@ function submitForm() {}
       <div class="overlay" v-if="store.isEditModalOn" @click.stop="store.toggleEditModal()"></div>
       <div class="edit-modal">
         <h2>Edit item</h2>
-
         <form
           v-if="store.chosenCell > -1 && store.data.items[store.chosenCell]"
           class="form-container"
         >
           <div class="input-wrapper">
             <label for="itemId">Item Id</label>
-            <input
-              type="number"
-              min="0"
-              name="itemId"
-              :value="store.data.items[store.chosenCell]?.itemId"
-              @change="handleChange($event, 'itemId')"
-            />
+            <input type="number" min="0" name="itemId" v-model="state.itemId" />
           </div>
           <div class="input-wrapper">
             <label for="itemLevel">Item Level</label>
-            <input
-              type="number"
-              min="1"
-              name="itemLevel"
-              :value="store.data.items[store.chosenCell]?.itemLevel"
-              @change="handleChange($event, 'itemLevel')"
-              required
-            />
+            <input type="number" min="1" name="itemLevel" v-model="state.itemLevel" />
+            <span v-if="v$.itemLevel.$error"> {{ v$.itemLevel.$errors[0].$message }} </span>
           </div>
           <div class="input-wrapper">
             <label for="itemType">Item Type</label>
-            <input
-              type="text"
-              name="itemType"
-              :value="store.data.items[store.chosenCell]?.itemType"
-              @change="handleChange($event, 'itemType')"
-              required
-            />
+            <input type="text" name="itemType" v-model="state.itemType" />
+            <span v-if="v$.itemType.$error"> {{ v$.itemType.$errors[0].$message }} </span>
           </div>
           <div class="input-wrapper">
             <label for="chainId">Chain Id</label>
-            <input
-              type="text"
-              name="chainId"
-              :value="store.data.items[store.chosenCell]?.chainId"
-              @change="handleChange($event, 'chainId')"
-              required
-            />
+            <input type="text" name="chainId" v-model="state.chainId" />
+            <span v-if="v$.chainId.$error"> {{ v$.chainId.$errors[0].$message }} </span>
           </div>
           <div class="input-wrapper">
             <label for="pausedUntil">Paused Until</label>
-            <input
-              type="datetime-local"
-              name="pausedUntil"
-              :value="pausedUntilDate"
-              @change="handleChange($event, 'pausedUntil')"
-            />
+            <VueDatePicker v-model="state.pausedUntil"></VueDatePicker>
           </div>
           <div class="input-wrapper">
             <label for="createdAt">Created At</label>
-            <input
-              type="datetime-local"
-              name="createdAt"
-              :value="createdAtDate"
-              @change="handleChange($event, 'createdAt')"
-            />
+            <VueDatePicker v-model="state.createdAt"></VueDatePicker>
           </div>
-
           <div class="checkbox-wrapper">
             <input
               type="checkbox"
               name="visibility"
-              :checked="store.data.items[store.chosenCell]?.visibility === 'visible'"
-              @change="handleChange($event, 'visibility')"
+              v-model="state.visibility"
+              true-value="visible"
+              false-value="hidden"
             />
             <label for="visibility">Visibility</label>
           </div>
           <div class="checkbox-wrapper">
-            <input
-              type="checkbox"
-              name="isInsideBubble"
-              :checked="store.data.items[store.chosenCell]?.isInsideBubble"
-              @change="handleChange($event, 'isInsideBubble')"
-            />
+            <input type="checkbox" name="isInsideBubble" v-model="state.isInsideBubble" />
             <label for="isInsideBubble">Is Inside Bubble</label>
           </div>
           <button type="submit" class="styled-button green" @click.prevent="submitForm()">
@@ -171,11 +144,13 @@ function submitForm() {}
       display: flex;
       align-items: start;
       flex-direction: column;
-      input {
+      /* apply to only other inputs which are not datepickers */
+      > input {
         height: 2em;
-        min-width: 250px;
-        border-radius: 5px;
-        padding: 1.5em 0.5em;
+        min-width: 300px;
+      }
+      span {
+        color: red;
       }
     }
     .checkbox-wrapper {

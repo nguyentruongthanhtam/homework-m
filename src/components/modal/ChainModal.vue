@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-import { ref } from 'vue'
 import { store, type Item } from '@/store'
 import { getAssetPath } from '@/assetService'
 import caretRightIcon from '@/assets/caret-right.svg'

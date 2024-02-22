@@ -1,6 +1,5 @@
 <script lang="ts" setup>
 import { store, type Item } from '@/store'
-import { getAssetPath } from '@/assetService'
 </script>
 
 <template>

@@ -33,6 +33,9 @@ export const store = reactive({
       (this.data.items[this.chosenCell] as unknown as Record<string, string | number | boolean>)[type] = newValue
     }
   },
+  setValue(item:Item) {
+    this.data.items[this.chosenCell] = item
+  },
   removeItem(index: number) {
     this.data.items[index] = null
     this.chosenCell = -1
@@ -51,14 +54,6 @@ export const store = reactive({
   },
   addItemToBoard(newItem: Item, index: number) {
     return this.data.items[index] = newItem
-  },
-  getMaxLevelOfByItemChain(chainId: string|undefined) {
-    if(chainId) {
-      const arrayOfTheSameChainId = this.data.items.filter(item=>item?.chainId === chainId)
-      console.table(arrayOfTheSameChainId);
-      return arrayOfTheSameChainId
-    }
-    return null;
   },
   getMaxLevelOfByItemChain(chainId: string | undefined) {
     if (chainId) {

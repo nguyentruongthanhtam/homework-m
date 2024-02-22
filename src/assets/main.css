@@ -6,7 +6,11 @@ html {
 *, *:before, *:after {
   box-sizing: inherit;
 }
-
+input {
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 1.4em 1em;
+}
 #app {
   width: 100vw;
   height: 100vh;
