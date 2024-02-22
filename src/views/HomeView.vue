@@ -5,10 +5,10 @@ import Panel from '@/components/Panel.vue'
 
 <template>
   <main>
-    <aside class="panel-container">
+    <aside class="panel">
       <Panel />
     </aside>
-    <section class="board-container">
+    <section class="board">
       <MergeBoard />
     </section>
   </main>
@@ -21,19 +21,19 @@ main {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  .panel-container {
+  .panel {
     height: 25%;
   }
-  .board-container {
+  .board {
     height: 70%;
   }
 }
 @media (min-width: 1024px) {
   main {
-    .panel-container {
+    .panel {
       height: 20%;
     }
-    .board-container {
+    .board {
       height: 75%;
     }
   }

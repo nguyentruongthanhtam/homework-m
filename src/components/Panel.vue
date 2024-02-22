@@ -35,7 +35,7 @@ function removeItem(index: number) {
         <img :src="infoIcon" alt="info button" class="icon" width="24" height="24" />
       </button>
     </div>
-    <div v-else>
+    <div v-else class="panel-container">
       <h2>Click on an item to see information about it here</h2>
     </div>
     <Teleport to="#app">

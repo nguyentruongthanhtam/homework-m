@@ -1,5 +1,5 @@
 // store.js
-import {reactive } from 'vue'
+import { reactive } from 'vue'
 import jsonData  from './assets/assigment.json'
 export interface JsonData {
   boardId: string
