@@ -54,19 +54,6 @@ import { store, type Item } from '@/store'
   }
 }
 
-.modal-enter-from {
-  opacity: 0;
-}
-
-.modal-leave-to {
-  opacity: 0;
-}
-
-.modal-enter-from .add-modal,
-.modal-leave-to .add-modal {
-  -webkit-transform: scale(1.1);
-  transform: scale(1.1);
-}
 @media (min-width: 1024px) {
   .modal {
     width: 50%;

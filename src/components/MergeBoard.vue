@@ -74,7 +74,7 @@ function handleDrop(event: DragEvent, targetIndex: number) {
         </template>
       </BoardCell>
     </div>
-    <Teleport to="#app">
+    <Teleport to="body">
       <AddModal></AddModal>
     </Teleport>
   </section>

@@ -1,17 +1,27 @@
 <script setup lang="ts">
 import MergeBoard from '@/components/MergeBoard.vue'
 import Panel from '@/components/Panel.vue'
+import SplashView from './SplashView.vue'
+import { ref } from 'vue'
+const shownSplashScreen = ref(true)
+
+setTimeout(() => {
+  shownSplashScreen.value = false
+}, 1000)
 </script>
 
 <template>
-  <main>
-    <aside class="panel">
-      <Panel />
-    </aside>
-    <section class="board">
-      <MergeBoard />
-    </section>
-  </main>
+  <Transition name="dd" appear>
+    <main v-if="!shownSplashScreen">
+      <aside class="panel">
+        <Panel />
+      </aside>
+      <section class="board">
+        <MergeBoard />
+      </section>
+    </main>
+    <SplashView v-else></SplashView>
+  </Transition>
 </template>
 
 <style>

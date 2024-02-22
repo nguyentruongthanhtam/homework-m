@@ -112,19 +112,6 @@ function addNewItem(item: Item) {
   background-color: #3333338c;
   z-index: 1;
 }
-.modal-enter-from {
-  opacity: 0;
-}
-
-.modal-leave-to {
-  opacity: 0;
-}
-
-.modal-enter-from .add-modal,
-.modal-leave-to .add-modal {
-  -webkit-transform: scale(1.1);
-  transform: scale(1.1);
-}
 @media (min-width: 1024px) {
   .add-modal {
     width: 50%;

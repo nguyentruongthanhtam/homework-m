@@ -38,10 +38,10 @@ function removeItem(index: number) {
     <div v-else class="panel-container">
       <h2>Click on an item to see information about it here</h2>
     </div>
-    <Teleport to="#app">
+    <Teleport to="body">
       <EditModal v-if="store.isEditModalOn"></EditModal>
     </Teleport>
-    <Teleport to="#app">
+    <Teleport to="body">
       <ChainModal v-if="store.isModalOn"></ChainModal>
     </Teleport>
   </div>
