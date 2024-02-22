@@ -36,7 +36,7 @@ export function getAssetPath(itemType : string): string {
         ["Flowerpot_10", "/png/Flower Pot/flower 1.png"],
         ["LevelDownBoosterScissors_01", "/png/Scissors/scissors.png"],
         ["ConservatorySeedlingKitEmpty_01", "/png/Seedling kit/kit.png"],
-        ["GardenBench_08", "/png/Bench/bench.png"],
+        ["GardenBench_08", "/png/bench/bench.png"],
         ["TimeSkipBoosterSingle_01", "/png/Booster/time skip.png"],
         ["MaintenanceTools_08", "/png/Maintainance tool/tool 1.png"],
         ["MaintenanceTools_09", "/png/Maintainance tool/tool 2.png"],
