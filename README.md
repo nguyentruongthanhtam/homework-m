@@ -28,6 +28,7 @@ https://homework-metacore.vercel.app/
 - When an item type is unknown, a 'not-found' image will show instead of an image
 - A simple store for centralize data flow. Avoid prop drilling issue
 - Responsive with 2 breakpoints
+- 1 test case implemented
   
 ## Notes during development
 - Tried to replicate the look and feel of the game
