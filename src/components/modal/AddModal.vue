@@ -34,7 +34,7 @@ function addNewItem(item: Item) {
 </script>
 
 <template>
-  <Transition name="modal">
+  <Transition name="modal" appear>
     <div class="modal-wrapper" v-if="store.isAddModalOn">
       <div class="overlay" v-if="store.isAddModalOn" @click.stop="store.toggleAddModal()"></div>
       <div class="add-modal">

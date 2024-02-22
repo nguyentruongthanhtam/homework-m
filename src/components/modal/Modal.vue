@@ -3,7 +3,7 @@ import { store, type Item } from '@/store'
 </script>
 
 <template>
-  <Transition name="modal">
+  <Transition name="modal" appear>
     <div class="modal-wrapper" v-if="store.isModalOn">
       <div class="overlay" v-if="store.isModalOn" @click.stop="store.toggleModal()"></div>
       <div class="modal">

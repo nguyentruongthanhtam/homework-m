@@ -49,7 +49,7 @@ function submitForm() {
 </script>
 
 <template>
-  <Transition name="modal">
+  <Transition name="modal" appear>
     <div class="modal-wrapper" v-if="store.isEditModalOn">
       <div class="overlay" v-if="store.isEditModalOn" @click.stop="store.toggleEditModal()"></div>
       <div class="edit-modal">
